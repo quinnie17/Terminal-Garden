@@ -5,6 +5,10 @@
 
 int main(void) 
 {
+    char cursor = '_';
+    while (cursor != 'q')
+    {
+    cursor = getchar();
     // Print text in yellow
     printf("%sHello, World! This text is yellow.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
 
@@ -16,6 +20,9 @@ int main(void)
     int a = 100, b = 10000, c = 1000000;
     printf( "%12d %12d %12d\n", a, b, c);
     printf( "%-12d %-12d %-12d\n", a, b, c);
+    printf("\x1b[2K\x1b[1A");
+    //printf("\e[1;1H\e[2J");
+    }
     return 0;
 
 }
