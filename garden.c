@@ -7,8 +7,8 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "plant.h"
-#include "display.h"
+#include "./plant.h"
+#include "./display.h"
 
 /*
 *  Assisted with development by Claude Sonnet 4.5
@@ -21,7 +21,7 @@ int main(int agrc, char **argv)
     // Create selection var for user input
     char selection = '_';
     // Get program start time
-    time_t startup_time = time(NULL);
+    //time_t startup_time = time(NULL);
     // Get update cycle time
     time_t update_time = time(NULL);
     // Build default plant struct
@@ -37,7 +37,7 @@ int main(int agrc, char **argv)
         if (current.water_level > 0 && difftime(now, update_time) >= 60) // 60 Seconds
         {
             current.water_level--; // 
-            update_status_display(); // Redraw status bar
+            //update_status_display(); // Redraw status bar
         }
         selection = getchar();
         if (selection == '\n')

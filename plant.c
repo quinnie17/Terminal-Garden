@@ -4,8 +4,8 @@
 #include <strings.h>
 #include <stdbool.h>
 #include <time.h>
-#include "display.h"
-#include "plant.h"
+#include "./plant.h"
+#include "./display.h"
 
 
 void new_plant(plant *p, char type)
