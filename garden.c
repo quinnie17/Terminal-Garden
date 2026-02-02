@@ -7,8 +7,8 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "./plant.h"
-#include "./display.h"
+#include "plant.h"
+#include "display.h"
 
 /*
 *  Assisted with development by Claude Sonnet 4.5
@@ -84,16 +84,4 @@ int main(int agrc, char **argv)
                 break;
         }
     }    
-}
-
-// #####
-
-
-
-void print_status(plant *p)
-{
-    // First line is Plant Type, Is Mature, Age in minutes
-
-    // Second Line is a water_level status bar that decrements by one every 60 seconds
-
 }

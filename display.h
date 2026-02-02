@@ -7,7 +7,7 @@
 #include <strings.h>
 #include <stdbool.h>
 #include <time.h>
-#include "./plant.h"
+#include "plant.h"
 
 // Define version number
 #define VERSION "1.0"
@@ -19,6 +19,6 @@ void print_menu();
 // Print whitespace
 void print_ws();
 // Print Status Bar
-//void print_status(plant *p);
+void print_status(plant *p);
 
 #endif // DISPLAY_H

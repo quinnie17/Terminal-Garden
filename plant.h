@@ -7,7 +7,6 @@
 #include <strings.h>
 #include <stdbool.h>
 #include <time.h>
-#include "./display.h"
 
 // Plant Structure
 typedef struct plant
