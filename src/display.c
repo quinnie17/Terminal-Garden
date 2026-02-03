@@ -4,8 +4,32 @@
 #include <strings.h>
 #include <stdbool.h>
 #include <time.h>
+#include <termios.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "plant.h"
 #include "display.h"
+
+struct termios original_ttystate;
+
+void setup_terminal() 
+{
+    // Save original state
+    tcgetattr(STDIN_FILENO, &original_ttystate);
+    
+    // Set non-blocking
+    struct termios new_ttystate = original_ttystate;
+    new_ttystate.c_lflag &= ~(ICANON | ECHO);
+    new_ttystate.c_cc[VMIN] = 0;
+    new_ttystate.c_cc[VTIME] = 0;
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_ttystate);
+}
+
+void restore_terminal() 
+{
+    // Restore original state
+    tcsetattr(STDIN_FILENO, TCSANOW, &original_ttystate);
+}
 
 void print_menu()
 {
@@ -55,5 +79,8 @@ void print_ws()
 // Print Plant Status Menu
 void print_status(plant *p)
 {
-    
+    // First line is Plant Type, Is Mature, Age in minutes
+
+    // Second Line is a water_level status bar that decrements by one every 60 seconds
+
 }

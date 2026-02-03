@@ -1,17 +1,37 @@
-CC = gcc
-CFLAGS = -Wall -g
+CC = clang
+CFLAGS = -Wall -g -Iinclude
+SRCDIR = src
+OBJDIR = build
+BINDIR = bin
 
-garden: garden.o plant.o display.o
-	$(CC) $(CFLAGS) -o garden garden.o plant.o display.o
+# Source files
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+# Object files
+OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+# Executable name
+TARGET = $(BINDIR)/garden
 
-garden.o: garden.c plant.h display.h
-	$(CC) $(CFLAGS) -c garden.c
+# Default target
+all: directories $(TARGET)
 
-plant.o: plant.c plant.h display.h
-	$(CC) $(CFLAGS) -c plant.c
+# Create necessary directories
+directories:
+	@mkdir -p $(OBJDIR) $(BINDIR) saves
 
-display.o: display.c display.h plant.h
-	$(CC) $(CFLAGS) -c display.c
+# Link
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^
 
+# Compile
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean
 clean:
-	rm -f *.o
+	rm -rf $(OBJDIR) $(BINDIR)
+
+# Run
+run: all
+	./$(TARGET)
+
+.PHONY: all clean directories run

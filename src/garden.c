@@ -12,7 +12,6 @@
 
 /*
 *  Assisted with development by Claude Sonnet 4.5
-*  All code was written by human hands, with references provide by
 *  AI was used to define and help select different functions to assist in the portability of the code.
 */
 
@@ -20,8 +19,9 @@ int main(int agrc, char **argv)
 {
     // Create selection var for user input
     char selection = '_';
+    void setup_terminal();
     // Get program start time
-    time_t startup_time = time(NULL);
+    //time_t startup_time = time(NULL);
     // Get update cycle time
     time_t update_time = time(NULL);
     // Build default plant struct
@@ -37,10 +37,15 @@ int main(int agrc, char **argv)
         if (current.water_level > 0 && difftime(now, update_time) >= 60) // 60 Seconds
         {
             current.water_level--; // 
-            update_status_display(); // Redraw status bar
+            //update_status_display(); // Redraw status bar
         }
-        selection = getchar();
-        if (selection == '\n')
+        char input = getchar();
+        if (input != EOF && input != '\n') 
+        {
+            selection = input;
+        }
+        usleep(100000);
+        if (selection != '_')
         {
             continue;
         }
@@ -51,6 +56,7 @@ int main(int agrc, char **argv)
             case 'q':
                 printf("Quitting Program\n");
                 clrscr();
+                restore_terminal();  // Automatically called on exit
                 exit(0);
                 break;
             // P to plant a new plant
@@ -84,16 +90,4 @@ int main(int agrc, char **argv)
                 break;
         }
     }    
-}
-
-// #####
-
-
-
-void print_status(plant *p)
-{
-    // First line is Plant Type, Is Mature, Age in minutes
-
-    // Second Line is a water_level status bar that decrements by one every 60 seconds
-
 }
