@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc 
 CFLAGS = -Wall -g -Iinclude
 SRCDIR = src
 OBJDIR = build
