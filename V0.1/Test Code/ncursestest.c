@@ -9,7 +9,7 @@
 
 void die(const char *msg) {
     endwin(); // restore terminal before exiting
-    perror(msg); // prints msg + the system error string
+    printf("%s", msg); // prints msg + the system error string
     exit(EXIT_FAILURE);
 }
 
@@ -40,10 +40,10 @@ int main(void) {
     // Initialize the Screen
     initscr();
     
-    //if (init_term(TCOLS, TROWS) != 1)
-   // {
-   //     die("Failed to resize terminal");
-  //  } 
+    if (init_term(TCOLS, TROWS) != 1)
+    {
+        die("Failed to resize terminal");
+    } 
     printw("Cols %i, Rows %i", COLS, LINES);
     refresh();
     
