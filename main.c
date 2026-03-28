@@ -56,11 +56,11 @@ WINDOW *createWin(int height, int width, int startY, int startX) {
 }
 
 void draw_art_centered(WINDOW *win, const char *art[], int starty) {
-    int win_width = getmaxx(win);
+    int win_width = getmaxx(win) - 2;  // usable width, exclude left+right borders
 
     for (int i = 0; art[i] != NULL; i++) {
-        int x = (win_width - strlen(art[i])) / 2;
-        if (x < 0) x = 0;  // clamp if window too narrow
+        int x = (win_width - (int)strlen(art[i])) / 2 + 1;  // +1 to skip left border
+        if (x < 1) x = 1;  // clamp to inside border
         mvwprintw(win, starty + i, x, "%s", art[i]);
     }
     wrefresh(win);
@@ -82,9 +82,10 @@ int main(void) {
     wrefresh(menu);
     wrefresh(plant);
 
-    draw_art_centered(plant, pot0, 14);
+    draw_art_centered(plant, pot8, 2);
 
     getch();
     delwin(menu);
+    delwin(plant);
     endwin();
 }
