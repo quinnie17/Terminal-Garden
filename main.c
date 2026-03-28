@@ -56,11 +56,20 @@ WINDOW *createWin(int height, int width, int startY, int startX) {
 }
 
 void draw_art_centered(WINDOW *win, const char *art[], int starty) {
-    int win_width = getmaxx(win) - 2;  // usable width, exclude left+right borders
+    int win_width = getmaxx(win) - 2;
+
+    /* find the widest line */
+    int max_width = 0;
+    for (int i = 0; art[i] != NULL; i++) {
+        int len = (int)strlen(art[i]);
+        if (len > max_width) max_width = len;
+    }
+
+    /* all lines start at the same x */
+    int x = (win_width - max_width) / 2 + 1;
+    if (x < 1) x = 1;
 
     for (int i = 0; art[i] != NULL; i++) {
-        int x = (win_width - (int)strlen(art[i])) / 2 + 1;  // +1 to skip left border
-        if (x < 1) x = 1;  // clamp to inside border
         mvwprintw(win, starty + i, x, "%s", art[i]);
     }
     wrefresh(win);
@@ -82,7 +91,7 @@ int main(void) {
     wrefresh(menu);
     wrefresh(plant);
 
-    draw_art_centered(plant, pot8, 2);
+    draw_art_centered(plant, pot8, 3);
 
     getch();
     delwin(menu);
